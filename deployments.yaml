@@ -1,0 +1,135 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  creationTimestamp: ~
+  labels: 
+    app: frontend
+  name: frontend-prod
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: frontend
+  strategy: {}
+  template: 
+    metadata: 
+      creationTimestamp: ~
+      labels: 
+        app: frontend
+        version: prod
+    spec: 
+      containers: 
+        - 
+          image: "node101:1.0.0"
+          imagePullPolicy: Never
+          name: frontend
+          resources: {}
+          ports:
+          - containerPort: 3000
+          env:
+          - name: SERVICE_NAME
+            value: "frontend-prod"
+          - name: UPSTREAM_URI
+            value: "http://middleware/"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  creationTimestamp: ~
+  labels: 
+    app: middleware
+  name: middleware-prod
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: middleware
+  strategy: {}
+  template: 
+    metadata: 
+      creationTimestamp: ~
+      labels: 
+        app: middleware
+        version: prod
+    spec: 
+      containers: 
+        - 
+          image: "node101:1.0.0"
+          imagePullPolicy: Never
+          name: middleware
+          resources: {}
+          ports:
+          - containerPort: 3000
+          env:
+          - name: SERVICE_NAME
+            value: "middleware-prod"
+          - name: UPSTREAM_URI
+            value: "http://backend/"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  creationTimestamp: ~
+  labels: 
+    app: middleware
+  name: middleware-canary
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: middleware
+  strategy: {}
+  template: 
+    metadata: 
+      creationTimestamp: ~
+      labels: 
+        app: middleware
+        version: canary
+    spec: 
+      containers: 
+        - 
+          image: "node101:1.0.0"
+          imagePullPolicy: Never
+          name: middleware
+          resources: {}
+          ports:
+          - containerPort: 3000
+          env:
+          - name: SERVICE_NAME
+            value: "middleware-canary"
+          - name: UPSTREAM_URI
+            value: "http://backend/"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  creationTimestamp: ~
+  labels: 
+    app: backend
+  name: backend-prod
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: backend
+  strategy: {}
+  template: 
+    metadata: 
+      creationTimestamp: ~
+      labels: 
+        app: backend
+        version: canary
+    spec: 
+      containers: 
+        - 
+          image: "node101:1.0.0"
+          imagePullPolicy: Never
+          name: backend
+          resources: {}
+          ports:
+          - containerPort: 3000
+          env:
+          - name: SERVICE_NAME
+            value: "backend-prod"
+          - name: UPSTREAM_URI
+            value: "http://worldclockapi.com/api/json/utc/now"

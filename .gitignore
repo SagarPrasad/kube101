@@ -1,0 +1,26 @@
+.gradle/
+.clover/
+out/
+build/
+*/build/
+*/bin/
+*/target
+.idea/
+*.iml
+.settings
+.project
+.classpath
+*.ipr
+*.iws
+*.log
+clover.license
+*/generatedsources/
+
+# local configuration
+#application.yml
+
+.DS_Store
+
+classes/
+*/node_modules
+

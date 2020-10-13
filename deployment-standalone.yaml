@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  creationTimestamp: ~
+  labels: 
+    app: node101-deploy
+  name: node101-deploy
+  namespace: demo
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: node101-deploy
+  strategy: {}
+  template: 
+    metadata: 
+      creationTimestamp: ~
+      labels: 
+        app: node101-deploy
+    spec: 
+      containers: 
+        - 
+          image: "node101:1.0.0"
+          imagePullPolicy: Never
+          name: node101
+          resources: {}
+status: {}
